@@ -395,51 +395,6 @@ local REDIRECT_URL = jaeger_subdomain + "." + CUSTOM_DOMAIN_NAME;
           "serviceAccountName": "jaeger-service-account",
           "containers": [
             {
-              "name": "gatekeeper",
-              "image": std.join("", [target_registry, "quay.io/keycloak/keycloak-gatekeeper:", GATEKEER_VERSION]),
-              "imagePullPolicy": "Always",
-              "args": [
-                "--client-id=jaeger",
-                std.join("", ["--client-secret=", tmax_client_secret]),
-                "--listen=:3000",
-                "--upstream-url=http://127.0.0.1:16686",
-                std.join("", ["--discovery-url=https://", HYPERAUTH_DOMAIN, "/auth/realms/tmax"]),
-                "--secure-cookie=false",
-                "--skip-openid-provider-tls-verify=true",
-                "--enable-self-signed-tls=false",
-                "--tls-cert=/etc/secrets/tls.crt",
-                "--tls-private-key=/etc/secrets/tls.key",
-                "--tls-ca-certificate=/etc/secrets/ca.crt",
-                "--skip-upstream-tls-verify=true",
-                "--upstream-keepalives=false",
-                "--enable-default-deny=true",
-                "--enable-refresh-tokens=true",
-                "--enable-metrics=true",
-                "--encryption-key=AgXa7xRcoClDEU0ZDSH4X0XhL5Qy2Z2j",
-                "--forbidden-page=/html/access-forbidden.html",
-                "--resources=uri=/*|roles=jaeger:jaeger-manager",
-                "--enable-encrypted-token",
-                "--verbose"
-              ],
-              "ports": [
-                {
-                  "containerPort": 3000,
-                  "name": "gatekeeper"
-                }
-              ],
-              "volumeMounts": [
-                {
-                  "name": "gatekeeper-files",
-                  "mountPath": "/html"
-                },
-                {
-                  "name": "secret",
-                  "mountPath": "/etc/secrets",
-                  "readOnly": true
-                }
-              ]
-            },
-            {
               "args": [
                 "--config-file=/conf/query.yaml"
               ],
