@@ -169,7 +169,7 @@ local REDIRECT_URL = jaeger_subdomain + "." + CUSTOM_DOMAIN_NAME;
         [
           "reporter:",
           "  grpc:",
-          "  host-port: \"jaeger-collector:14250\""
+          "    host-port: \"jaeger-collector:14250\""
         ]
       )
     }
@@ -496,16 +496,16 @@ local REDIRECT_URL = jaeger_subdomain + "." + CUSTOM_DOMAIN_NAME;
       "ports": [
         {
           "name": "jaeger-query",
-          "port": 443,
+          "port": 80,
           "protocol": "TCP",
-          "targetPort": 3000
+          "targetPort": 16686
         }
       ],
       "selector": {
         "app.kubernetes.io/component": "query",
         "app.kubernetes.io/name": "jaeger"
       },
-      "type": "ClusterIP"
+      "type": "LoadBalancer"
     }
   },
   {
