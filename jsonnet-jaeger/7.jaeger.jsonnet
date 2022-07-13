@@ -247,14 +247,14 @@ local REDIRECT_URL = jaeger_subdomain + "." + CUSTOM_DOMAIN_NAME;
                   "name": "jaeger-certs",
                   "mountPath": "/ca/cert",
                   "readOnly": true
-                } + ( if timezone != "UTC" then [
+                }
+              ] + ( if timezone != "UTC" then [
                   {
                     "name": "timezone-config",
                     "mountPath": "/etc/localtime"
                   }
                 ] else []
-              )
-              ],
+              ),
               "env": [
                 {
                   "name": "SPAN_STORAGE_TYPE",
