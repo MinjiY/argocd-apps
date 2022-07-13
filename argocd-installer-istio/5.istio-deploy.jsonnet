@@ -316,7 +316,7 @@ local target_registry = if is_offline == "false" then "" else private_registry +
               "name": "pilot-envoy-config"
             }
           ] + (
-            if time_zone != "UTC" then [
+            if timezone != "UTC" then [
               {
                 "name": "timezone-config",
                 "hostPath": {
@@ -727,7 +727,7 @@ local target_registry = if is_offline == "false" then "" else private_registry +
               }
             }
           ]  + (
-            if time_zone != "UTC" then [
+            if timezone != "UTC" then [
               {
                 "name": "timezone-config",
                 "hostPath": {
