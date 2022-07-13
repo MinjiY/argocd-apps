@@ -290,7 +290,7 @@ local REDIRECT_URL = jaeger_subdomain + "." + CUSTOM_DOMAIN_NAME;
               "name": "jaeger-configuration-volume"
             }
           ] + (
-            if time_zone != "UTC" then [
+            if timezone != "UTC" then [
               {
                 "name": "timezone-config",
                 "hostPath": {
@@ -498,7 +498,7 @@ local REDIRECT_URL = jaeger_subdomain + "." + CUSTOM_DOMAIN_NAME;
               "name": "jaeger-configuration-volume"
             }
           ] + (
-            if time_zone != "UTC" then [
+            if timezone != "UTC" then [
               {
                 "name": "timezone-config",
                 "hostPath": {
@@ -672,7 +672,7 @@ local REDIRECT_URL = jaeger_subdomain + "." + CUSTOM_DOMAIN_NAME;
               "name": "jaeger-configuration-volume"
             }
           ] + (
-            if time_zone != "UTC" then [
+            if timezone != "UTC" then [
               {
                 "name": "timezone-config",
                 "hostPath": {
