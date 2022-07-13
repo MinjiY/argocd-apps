@@ -7,7 +7,7 @@ function(
   CUSTOM_CLUSTER_ISSUER="tmaxcloud-issuer",
   kiali_subdomain="kiali",
   client_id="kiali",
-  timezone="UTC",
+  timezone="UTC"
 )
 
 local target_registry = if is_offline == "false" then "" else private_registry + "/";
@@ -520,7 +520,7 @@ local target_registry = if is_offline == "false" then "" else private_registry +
               }
             }
           ]+ (
-            if time_zone != "UTC" then [
+            if timezone != "UTC" then [
               {
                 "name": "timezone-config",
                 "hostPath": {
