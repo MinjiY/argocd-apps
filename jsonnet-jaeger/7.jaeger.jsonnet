@@ -9,7 +9,8 @@ function(
     CUSTOM_DOMAIN_NAME="custom-domain",
     CUSTOM_CLUSTER_ISSUER="tmaxcloud-issuer",
     jaeger_subdomain="jaeger",
-    storage_type="opensearch"
+    storage_type="opensearch",
+    timezone="UTC",
 )
 
 local target_registry = if is_offline == "false" then "" else private_registry + "/";
@@ -246,7 +247,13 @@ local REDIRECT_URL = jaeger_subdomain + "." + CUSTOM_DOMAIN_NAME;
                   "name": "jaeger-certs",
                   "mountPath": "/ca/cert",
                   "readOnly": true
-                }
+                } + ( if timezone != "UTC" then [
+                  {
+                    "name": "timezone-config",
+                    "mountPath": "/etc/localtime"
+                  }
+                ] else []
+              )
               ],
               "env": [
                 {
@@ -282,7 +289,16 @@ local REDIRECT_URL = jaeger_subdomain + "." + CUSTOM_DOMAIN_NAME;
               },
               "name": "jaeger-configuration-volume"
             }
-          ]
+          ] + (
+            if time_zone != "UTC" then [
+              {
+                "name": "timezone-config",
+                "hostPath": {
+                  "path": std.join("", ["/usr/share/zoneinfo", timezone])
+                }
+              }
+            ] else []
+          )
         }
       }
     }
@@ -447,7 +463,13 @@ local REDIRECT_URL = jaeger_subdomain + "." + CUSTOM_DOMAIN_NAME;
                   "mountPath": "/ca/cert",
                   "readOnly": true
                 }
-              ]
+              ] + ( if timezone != "UTC" then [
+                  {
+                    "name": "timezone-config",
+                    "mountPath": "/etc/localtime"
+                  }
+                ] else []
+              )
             }
           ],
           "dnsPolicy": "ClusterFirst",
@@ -475,7 +497,16 @@ local REDIRECT_URL = jaeger_subdomain + "." + CUSTOM_DOMAIN_NAME;
               },
               "name": "jaeger-configuration-volume"
             }
-          ]
+          ] + (
+            if time_zone != "UTC" then [
+              {
+                "name": "timezone-config",
+                "hostPath": {
+                  "path": std.join("", ["/usr/share/zoneinfo", timezone])
+                }
+              }
+            ] else []
+          )
         }
       }
     }
@@ -582,7 +613,13 @@ local REDIRECT_URL = jaeger_subdomain + "." + CUSTOM_DOMAIN_NAME;
                   "mountPath": "/ca/cert",
                   "readOnly": true
                 }
-              ],
+              ] + ( if timezone != "UTC" then [
+                  {
+                    "name": "timezone-config",
+                    "mountPath": "/etc/localtime"
+                  }
+                ] else []
+              ),
               "ports": [
                 {
                   "containerPort": 5775,
@@ -634,7 +671,16 @@ local REDIRECT_URL = jaeger_subdomain + "." + CUSTOM_DOMAIN_NAME;
               },
               "name": "jaeger-configuration-volume"
             }
-          ]
+          ] + (
+            if time_zone != "UTC" then [
+              {
+                "name": "timezone-config",
+                "hostPath": {
+                  "path": std.join("", ["/usr/share/zoneinfo", timezone])
+                }
+              }
+            ] else []
+          )
         }
       }
     }
